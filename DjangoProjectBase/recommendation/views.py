@@ -7,7 +7,7 @@ import openai
 from openai.embeddings_utils import get_embedding, cosine_similarity
 import os
 
-_ = load_dotenv('../openAI.env')
+_ = load_dotenv('../openAI.env')    
 openai.api_key  = os.environ['openAI_api_key']
 
 def recommendation(request):
@@ -23,19 +23,19 @@ def recommendation(request):
         sim = np.array(sim)
         idx = np.argmax(sim)
         
-        lista_puntajes = []
+        list_point = []
 
         for i in range(len(sim)):
             if sim[i] > 0.8:
-                lista_puntajes.append({'movie':movies[i] , 'puntaje':sim[i]})
+                list_point.append({'movie':movies[i] , 'puntaje':sim[i]})
 
-        lista_ordenada_puntajes = sorted(lista_puntajes, key=lambda x: x["puntaje"], reverse=True)
+        list_pointS = sorted(list_point, key=lambda x: x["puntaje"], reverse=True)
 
-        lista_ordenada_movies = []
-        for i in lista_ordenada_puntajes:
-            lista_ordenada_movies.append(i['movie'])
+        list_ordenada_movies = []
+        for i in list_pointS:
+            list_ordenada_movies.append(i['movie'])
 
-        return render(request, 'recommendation.html', {'movies': lista_ordenada_movies})
+        return render(request, 'recommendation.html', {'movies': list_ordenada_movies})
     
     else:
         return render(request, 'recommendation.html')
