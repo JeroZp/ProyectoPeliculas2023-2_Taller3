@@ -12,5 +12,3 @@ class Command(BaseCommand):
         items = Movie.objects.all()
         item = items[10]
         print(item.emb)
-        
-        
